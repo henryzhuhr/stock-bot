@@ -1,0 +1,27 @@
+services:
+  # MySQL
+  mysql:
+    image: mysql:9 # https://hub.docker.com/_/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_secret_password}
+      MYSQL_DATABASE: stock_assistant
+      TZ: Asia/Shanghai # 设置时区
+    ports:
+      - "45526:3306"
+    networks:
+      - default
+
+  # Redis
+  redis:
+    image: redis:8 # https://hub.docker.com/_/redis
+    ports:
+      - "45527:6379"
+    networks:
+      - default
+
+      
+# -- 网络名称，用于容器间通信
+networks:
+  default:
+    name: stock-assistant-network
